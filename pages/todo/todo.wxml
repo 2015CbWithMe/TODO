@@ -1,0 +1,109 @@
+<!--todo.wxml-->
+
+<view class="container">
+        <view class="inp">
+           <view class="c-input">
+           <input type="text" class="usertype" value="{{todoval}}" bindinput="getnewdoto" placeholder=" add something here.." style="border:1px solid #000"></input>
+           </view>
+           <button class="addbtn" bindtap='addnewtodo'><icon class="fa fa-plus"></icon> add</button>
+        </view>
+     
+      <!-- <view class="hlist"// 菜单背景颜色切换> 
+              <view   data-num="1" class="hl-items {{curid==1?'active':''}}" bindtap="menuBgcolor">你好</view>
+               <view  data-num="2" class="hl-items {{curid==2?'active':''}}" bindtap="menuBgcolor">再见</view>
+                <view data-num="3" class="hl-items {{curid==3?'active':''}}"  bindtap="menuBgcolor">拜拜</view>
+      </view>  -->
+      <!-- 菜单背景颜色切换 // 菜单背景颜色切换2-->
+        <view class="hlist" > 
+              <view  wx:for="{{menulist}}" wx:key="{{index}}" data-num="{{index}}" class="hl-items {{curid==index?'active':''}} {{index==1?'middlemg':''}}" bindtap="menuBgcolor">
+                 <view class="{{item.icon}}"></view> {{item.name}} <text wx:if="{{index == 1 && doneflag == true}}">({{donenum}})</text>
+              </view>
+         </view>
+   <view class="selcetall" >
+        <view wx:if="{{!flag}}">
+            <view class="sabtn">
+              <checkbox   class="undercheckbox" checked='{{selectallChecked}}'/>
+                <image  bindtap="sachangebox" data-id = "{{index}}"  class="checkicon"  src="{{saiconPath }}" /> 
+                全选
+            </view>
+                
+            <view class="checkover" bindtap='actiondone'>完成</view>
+          </view>
+          <view wx:else bindtap="showcheckall" class="showca">
+              <icon  class="fa fa-check-square-o" ></icon>
+               多选
+          </view>
+    </view>
+    <view class="selectAction" animation="{{fadeup}}">
+       <view class="donealready fa fa-check">DONE</view><view class="delete fa fa-close">DELETE</view>
+    </view>
+    <scroll-view scroll-y="true" style="width:100%;height:500px;" class="bd">
+  
+     
+             <view class="tabbd {{curid == 0 ? 'ing' : ''}} ">
+                   <view class="listwrap" wx:for="{{newtodo}}" wx:key="{{index}}" >
+
+                   
+                            <view class="lists" 
+                            data-id="{{index}}"
+                             bindtouchstart='handletouchstart'
+                            bindtouchmove="handletouchmove"
+                            bindtouchend='handletouchend'
+                            style="{{item.style}}"
+                           >
+                            <view class="radiowrap">
+                            <checkbox-group wx:if="{{!flag}}">
+                                    <checkbox   class="undercheckbox" checked='{{item.checked}}'/>
+                                    <image  bindtap="changebox" data-id = "{{index}}"  class="checkicon"  src="{{ item.radioIconPath }}" /> 
+                            </checkbox-group>
+                            </view>
+                                    {{index}}: {{ item.title }}
+                            </view> 
+                            <view   class="slidebtn" style="{{btnmovestyle}}">
+                                    <view class="donecur" data-index="{{index}}"  data-btn='done' bindtap='btnaction'>
+                                      <view class="fa fa-check sbbtn"></view>
+                                      <text>done</text> 
+                                    </view>
+                                     <view class="delcur" data-index="{{index}}" data-btn='del' bindtap='btnaction' style="{{delstyle}}">
+                                       <view class="fa fa-close sbbtn"></view> 
+                                        <text>{{deltext}}</text> 
+                                      </view>
+                            </view>
+                    
+                </view>
+             </view>
+             <view class="tabbd {{curid == 1 ? 'ing' : ''}}">
+                  <view class="listwrap" wx:for="{{donetodo}}" wx:key="{{index}}" >
+
+                      <view class="lists" 
+                            data-id="{{index}}"
+                             bindtouchstart='handletouchstart'
+                            bindtouchmove="handletouchmove"
+                            bindtouchend='handletouchend'
+                            style="{{item.style}}">
+                            <view class="radiowrap">
+                            <checkbox-group wx:if="{{!flag}}">
+                                    <checkbox   class="undercheckbox" checked='{{item.checked}}'/>
+                                    <image  bindtap="changebox" data-id = "{{index}}"  class="checkicon"  src="{{ item.radioIconPath }}" /> 
+                            </checkbox-group>
+                            </view>
+                                    {{index}}: {{ item.title }}
+                            </view> 
+                            <view   class="slidebtn donedelbtn" style="{{btnmovestyle}}">
+                                    
+                                     <view class="delcur" data-index="{{index}}" bindtap='dellist'>
+                                       <view class="fa fa-close sbbtn"></view> 
+                                        <text>delete</text> 
+                                      </view>
+                            </view>
+                    
+                </view>
+             </view>  
+              <view class="tabbd {{curid == 2 ? 'ing' : ''}}" style="background-color:red">
+                3
+             </view>  
+     
+      </scroll-view>
+       <button bindtap="clearcache">clear</button> 
+  </view>
+  
