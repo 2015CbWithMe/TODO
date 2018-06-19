@@ -37,10 +37,9 @@
     <view class="selectAction" animation="{{fadeup}}">
        <view class="donealready fa fa-check">DONE</view><view class="delete fa fa-close">DELETE</view>
     </view>
-    <scroll-view scroll-y="true" style="width:100%;height:500px;" class="bd">
+    <scroll-view scroll-y="false"  class="bd" style="height:{{scrollheight}}px">
   
-     
-             <view class="tabbd {{curid == 0 ? 'ing' : ''}} ">
+            <view class="tabbd {{curid == 0 ? 'ing' : ''}} ">
                    <view class="listwrap" wx:for="{{newtodo}}" wx:key="{{index}}" >
 
                    
@@ -72,7 +71,7 @@
                     
                 </view>
              </view>
-             <view class="tabbd {{curid == 1 ? 'ing' : ''}}">
+             <view class="tabbd {{curid == 1 ? 'ing' : ''}}" bindtap="lk">
                   <view class="listwrap" wx:for="{{donetodo}}" wx:key="{{index}}" >
 
                       <view class="lists" 
@@ -91,7 +90,7 @@
                             </view> 
                             <view   class="slidebtn donedelbtn" style="{{btnmovestyle}}">
                                     
-                                     <view class="delcur" data-index="{{index}}" bindtap='dellist'>
+                                     <view class="delcur" data-index="{{index}}" bindtap='btnaction'>
                                        <view class="fa fa-close sbbtn"></view> 
                                         <text>delete</text> 
                                       </view>
@@ -102,8 +101,31 @@
               <view class="tabbd {{curid == 2 ? 'ing' : ''}}" style="background-color:red">
                 3
              </view>  
-     
+ 
+             
+              
       </scroll-view>
-       <button bindtap="clearcache">clear</button> 
+           <!-- <view style="width:85%;text-align:justify;" >
+          
+                  <view class="txt  {{item.selectclass}}"wx:for="{{txtarr}}" wx:key="{{index}}" > -->
+                    <!-- <view class="{{snum == index ? 'showinp' : '' }}" style="display:none" >  
+                          <input type="text"  placeholder='something here'  style="border:1px solid #000"/><button bindtap="savemark">确认</button>
+                    </view> -->
+                           
+                            <!-- <view  data-num="{{index}}"  style="display:inline" 
+                             bindtouchstart = 'moveselectstart'
+                             bindtouchmove='moveselect'
+                           
+                            bindtouchend='lend'
+                            bindlongpress="selectedtap">
+                            {{item.text}}。
+                            </view>
+                              
+                   </view>
+           </view> -->
+           <!-- <view class="showmark">
+
+           </view> -->
+       <!-- <button bindtap="clearcache">clear</button>  -->
   </view>
   

@@ -26,9 +26,71 @@ Page({
             deltext:"delete",
             delstyle:"",
             donenum:'',
-            doneflag:false
+            doneflag:false,
+            scrollheight:""
+            // txtdata: '看起来，现在不是携程最危险的时刻。2013年梁建章回归前，携程腹背受敌，遭到包括去哪儿、艺龙在内的对手的猛烈进攻，市值跌至32亿美元，被剔除出纳斯达克100指数。而现在，携程市值超过200亿美元。“当时的携程是一艘千疮百孔的航空母舰，很多高管拿到的期权行权价比市价还贵，不如白纸。在携程高管看来，目前的形势并没有当年那么危急。”一位接近携程的人士告诉《中国企业家》。接受采访的大多数行业人士认为，携程并非看不到持续不断的舆论危机，只是作为中国在线旅游市场的一家独大者，携程更关注的是收入、股价与利润。',
+            // txtarr: [],
+            // selectclass:'',
+            // statenum:"",
+            // snum:'-1',
+            // marktext:[],
+            // startY:'',
+            // _index:0,
+            // bb:30
         },
-  
+     
+        // selectedtap: function (e) {
+          
+        //   var txtarr = this.data.txtarr
+        //   var snum = e.currentTarget.dataset.num
+        //   this.data.txtarr[snum].state = this.data.txtarr[snum].state == 0 ? 1 :0
+        //   var statenum = this.data.txtarr[snum].state
+        //   var marktext = this.data.marktext
+        //   this.data.txtarr[snum].selectclass = statenum == 1 ? this.data.txtarr[snum].selectclass = 'selected' : this.data.txtarr[snum].selectclass = ''
+
+        //   this.setData({
+        //       txtarr,
+        //       snum
+        //   })
+         
+        // },
+        // moveselectstart:function(e){
+        //   var startY = this.data.startY
+        //   startY = e.touches[0].pageY
+        //  this.setData({
+        //         startY
+        //  })
+        // },
+        // moveselect : function(e){
+        //   var _move = e.touches[0].pageY
+        //   var startY = this.data.startY
+        //   var txtarr = this.data.txtarr
+        //    var _index = this.data._index
+        //   var bb = this.data.bb
+        
+        //   var aa = _move - startY
+        //   console.log(_index)
+        //   if(aa > bb){
+        //     bb+=30
+        //     _index+=1
+        //     console.log(_index)
+        //     this.data.txtarr[_index].state = 1
+        //     this.data.txtarr[_index].selectclass = 'selected'
+        //   }
+        //     this.setData({
+        //       txtarr,
+        //       _index,
+        //       bb
+        //     })
+        // },
+        // lend:function(e){
+          
+        //  this.setData({
+        //    bb:30
+        //  })
+          
+        // },
+    
         btnaction : function(e){
           var index = e.currentTarget.dataset.index
           var btnname = e.currentTarget.dataset.btn
@@ -40,6 +102,8 @@ Page({
           var deltext = this.data.deltext
           var donenum = this.data.donenum
           var doneflag = this.data.doneflag
+          // newtodo.slice(index,1)
+        
         if(btnname == "done"){
           donetodo.push({
             title: newtodo[index].title,
@@ -49,6 +113,7 @@ Page({
           })
           doneflag=true
           donenum = donetodo.length
+          newtodo.splice(index, 1)
           if (moveX == -180) {
             moveX = 0
             for (var i = 0; i < newtodo.length; i++) {
@@ -58,7 +123,7 @@ Page({
           }
         }else{
             delstyle = "position:absolute;right:0;transition:width .4s;width:180px"
-            btnmovestyle ="width:180px;"
+           
             deltext = "sure?"
         }
           this.setData({
@@ -66,7 +131,7 @@ Page({
             donetodo,
             delstyle,
             deltext,
-            btnmovestyle,
+            btnmovestyle :"width:180px;",
             donenum,
             doneflag
           })
@@ -323,26 +388,44 @@ Page({
               })
               console.log(this.data)
         },
-      
+       
         onLoad : function(){ //页面载入后取缓存，更新到页面
         
           var _this = this   //this关键字要先获取，因为后面要使用this.setdata，this的指向
           var temp2 = _this.data.newtodo
-       
+          var scrollheight =this.data.scrollheight
+        //   var txtdata = this.data.txtdata
+        //   console.log(txtdata)
+        //   var txtarr = this.data.txtarr
+        //   txtdata = txtdata.split("。")
+        //   // txtarr.push(txtdata)
+        //   for (var i = 0; i < txtdata.length;i++){
+           
+        //     txtarr.push({
+        //             text:txtdata.slice(i,i+1),
+        //             state:"0",
+        //             selectclass:''
+        //       })
+            
+        // }
+        
           wx.getStorage({
                 key: 'todolist',
                 success: function (res) {
                  for(var i=0;i<res.data.length;i++){
+                   
                    temp2.push({
                       title:res.data[i].title,
                       radioIconPath: res.data[i].radioIconPath,
                       checked: res.data[i].checked
                      })
-                
+                   scrollheight = res.data.length * 55
                  }
            
                 _this.setData({  //取到缓存，显示缓存
-                        newtodo : temp2
+                        newtodo : temp2,
+                        scrollheight
+                        // txtarr
                 })
              }
            })
